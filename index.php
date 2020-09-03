@@ -41,7 +41,7 @@ $data2 = json_decode($response_2);
 .container	{
 	display: flex;
 	justify-content: center;
-	padding: 70px 20px;
+	padding: 50px 20px;
 }
 .forecastWeather_container	{
 	display: flex;
