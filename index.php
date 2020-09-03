@@ -46,6 +46,7 @@ $data2 = json_decode($response_2);
 .container	{
 	display: flex;
 	justify-content: center;
+	height: 50%;
 }
 .forecastWeather_container	{
 	display: flex;
@@ -56,14 +57,18 @@ $data2 = json_decode($response_2);
 }
 .currentWeather_container{
 	text-align: center;
+	width: 500px;
+	background-color: rgba(0, 0, 0, 0.4);
+	color: white;
 }
 .nextDay{
-	background-color: red;
+	background-color: rgba(0, 0, 0, 0.4);
 	display: flex;
 	justify-content: space-around;
 }
 .splitContent{
 	float: left;
+	color: white;
 	width: 40%;
 	height: 300px;
 	padding: 10px;
@@ -73,34 +78,48 @@ $data2 = json_decode($response_2);
 	padding: 0;
 	margin: 0;
 }
+p	{
+	margin: auto;
+}
+.currentWeather_section{
+	height: 50%;
+	padding: 50px 20px;
+}
+
+body{
+	margin: 100px 100px;
+	background-image: url('images/brisbanecity.jpg');
+	background-repeat: no-repeat;
+	background-size: cover; 
+	vertically-align: middle;
+}
+
 </style>
 <body>
-	<section>
-	<div>
-		<h1> <?php echo $data->name; ?> Weather Status </h1>
-	</div>
-	
-	</section>
-
-		<section>
+		<section class="currentWeather_section">
 			<div class="container">
 				<div class="currentWeather_container"> 
-					<p><?php echo $data->name; ?></p>
-					<p><i class='fas fa-cloud-sun' style='font-size:36px'></i>
+					<h1><?php echo $data->name; ?></h1>
+					<p id="temp"><i class='fas fa-cloud-sun' style='font-size:100px'></i>
 					<?php echo $data->weather[0]->description; ?>
-					</p>
-					<p id="temp"><?php echo $data->main->temp; ?>°</p>
-					<p>Temp min <?php echo $data->main->temp_min; ?></p>
-					<p>Temp max <?php echo $data->main->temp_max; ?></p>
-					<p>Temperature feels like <?php echo $data->main->feels_like;; ?></p>
+					</p><br>
+					<div>
+					<p id="temp"><?php echo $data->main->temp; ?>°</p> 
+					<p>
+					Min <?php echo $data->main->temp_min; ?><br>
+					Max <?php echo $data->main->temp_max; ?></p>
+					</div>
+					<p>Temperature feels like: <?php echo $data->main->feels_like;; ?></p>
 					<p>Sunrise and Sunset times 
 						<?php echo $data->sys->sunrise; ?>
 						<?php echo $data->sys->sunset; ?>
 					</p>
-					<p>Humidity <?php echo $data->main->humidity; ?></p>
+					<p>Humidity <?php echo $data->main->humidity; ?>%</p>
 				</div>
 			</div>
+		</section>
 		
+		<section>
 	
 		<div class="container">
 			<div class="forecastWeather_container">
@@ -154,8 +173,9 @@ $data2 = json_decode($response_2);
 				</div>
 
 		</div>
+		</div>
 	</section>
-	</div>
+	
 
 </body>
 </html>
