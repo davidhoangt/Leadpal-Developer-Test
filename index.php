@@ -1,9 +1,10 @@
 <?php
 //API Key and OpenWeatherMap APIs to receive data
 //php script retrieves data from OpenWeathermp API and decodes into a JSON for use in HTML code
+//inputted city ID (Brisbane, AU) using data provided from OpenWeatherMap
 $apiKey = "0b26cc5017624800da6d3057f5191af9";
-$ch_1 = curl_init('api.openweathermap.org/data/2.5/weather?q=Brisbane&mode=json&units=metric&appid=0b26cc5017624800da6d3057f5191af9');
-$ch_2 = curl_init('api.openweathermap.org/data/2.5/forecast?q=Brisbane&mode=json&units=metric&&appid=0b26cc5017624800da6d3057f5191af9');
+$ch_1 = curl_init('api.openweathermap.org/data/2.5/weather?id=7839562&mode=json&units=metric&appid=0b26cc5017624800da6d3057f5191af9');
+$ch_2 = curl_init('api.openweathermap.org/data/2.5/forecast?id=7839562&mode=json&units=metric&&appid=0b26cc5017624800da6d3057f5191af9');
 
 curl_setopt($ch_1, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch_2, CURLOPT_RETURNTRANSFER, true);
@@ -27,6 +28,20 @@ $response_2 = curl_multi_getcontent($ch_2);
 
 $data = json_decode($response_1);
 $data2 = json_decode($response_2);
+
+//decode sunrise and sunset times to json
+$sunriseTime = json_decode($data->sys->sunrise);
+$sunsetTime = json_decode($data->sys->sunset);
+
+//convert UNIX time to readable data and time
+$unix_timestamp = $_POST['$sunriseTime'];
+$datetime = new DateTime("$unix_timestamp");
+echo $datetime->format('d-m-Y H:i:s');
+
+$unix_timestamp1 = $_POST['$sunsetTime'];
+$datetime1 = new DateTime("$unix_timestamp1");
+echo $datetime1->format('d-m-Y H:i:s');
+
 ?>
 
 <!DOCTYPE HTML>
@@ -101,8 +116,8 @@ body{
 						<br>Max <?php echo $data->main->temp_max; ?></p>
 					</div>
 				<p>Temperature feels like: <?php echo $data->main->feels_like;; ?></p>
-				<p>Sunrise Time: <?php echo $data->sys->sunrise; ?> </p>
-				<p>Sunset Time: <?php echo $data->sys->sunset; ?></p>
+				<p>Sunrise Time: <?php echo $datetime->format('d-m-Y H:i:s'); ?> </p>
+				<p>Sunset Time: <?php echo $datetime1->format('d-m-Y H:i:s'); ?></p>
 				<p>Humidity: <?php echo $data->main->humidity; ?>%</p>
 			</div>
 		</div>
